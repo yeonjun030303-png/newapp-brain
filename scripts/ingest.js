@@ -4,7 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 const KEYS = [process.env.GEMINI_API_KEY, process.env.GEMINI_API_KEY_2, process.env.GEMINI_API_KEY_3].filter(Boolean);
-const MODEL = process.env.GEMINI_MODEL || 'gemini-flash-latest';
+// 첫 모델이 막히면(503/404/시간초과) 다음 모델로 넘어간다. GEMINI_MODEL 변수로 맨 앞 모델을 바꿀 수 있다.
+const MODELS = [...new Set([process.env.GEMINI_MODEL, 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.5-flash', 'gemini-3.6-flash', 'gemini-3.5-flash-lite', 'gemini-3.1-flash-lite', 'gemini-flash-lite-latest'].filter(Boolean))];
+let cur = 0; // 마지막으로 성공한 모델 위치
 const POOL = 'ideas/pool.json';
 const LOG = 'requests/LOG.md';
 const RESUME = 'RESUME.md';
@@ -24,37 +26,49 @@ const norm = (s) => String(s).toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
 async function callGemini(parts) {
   if (!KEYS.length) throw new Error('GEMINI_API_KEY 시크릿이 없습니다');
   let last = '';
-  for (let i = 0; i < 6; i++) {
-    const key = KEYS[i % KEYS.length];
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
+  const tries = MODELS.length * 2;
+  for (let j = 0; j < tries; j++) {
+    const idx = (cur + j) % MODELS.length;
+    const model = MODELS[idx];
+    const key = KEYS[j % KEYS.length];
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
     let res;
     try {
       res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
         body: JSON.stringify({ contents: [{ parts }], generationConfig: { responseMimeType: 'application/json' } }),
-        signal: AbortSignal.timeout(90000),
+        signal: AbortSignal.timeout(60000),
       });
     } catch (e) {
-      last = 'network ' + (e.cause?.code || e.name);
-      console.log(`Gemini 연결 실패(${last}) 모델=${MODEL} 시도 ${i + 1}/6`);
-      await sleep(5000);
+      last = `${model} network ${e.cause?.code || e.name}`;
+      console.log(`Gemini 연결 실패: ${last} (${j + 1}/${tries}) -> 다음 모델`);
+      await sleep(2000);
       continue;
     }
     if (res.ok) {
-      const j = await res.json();
-      const t = (j.candidates?.[0]?.content?.parts || []).map((p) => p.text || '').join('');
-      return JSON.parse(t.replace(/```json|```/g, '').trim());
+      try {
+        const out = await res.json();
+        const t = (out.candidates?.[0]?.content?.parts || []).map((p) => p.text || '').join('');
+        const parsed = JSON.parse(t.replace(/```json|```/g, '').trim());
+        cur = idx;
+        console.log('Gemini 성공 모델 =', model);
+        return parsed;
+      } catch (e) {
+        last = `${model} 응답 해석 실패`;
+        console.log(`${last} (${j + 1}/${tries}) -> 다음 모델`);
+        continue;
+      }
     }
-    last = String(res.status);
-    if ([429, 500, 503].includes(res.status)) {
-      console.log(`Gemini ${res.status} 재시도 ${i + 1}/6`);
-      await sleep(15000);
+    last = `${model} HTTP ${res.status}`;
+    if ([404, 429, 500, 503].includes(res.status)) {
+      console.log(`Gemini ${last} (${j + 1}/${tries}) -> 다음 모델`);
+      await sleep(res.status === 404 ? 500 : 4000);
       continue;
     }
-    throw new Error('Gemini ' + res.status + ' ' + (await res.text()).slice(0, 200));
+    throw new Error('Gemini ' + last + ' ' + (await res.text()).slice(0, 200));
   }
-  throw new Error('Gemini 재시도 실패 ' + last);
+  throw new Error('Gemini 모든 모델 실패: ' + last);
 }
 
 const score = (x) =>
