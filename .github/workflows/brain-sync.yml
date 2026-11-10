@@ -1,0 +1,40 @@
+name: brain-sync
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  push:
+    paths: ['inbox/**']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: brain-sync
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci --no-audit --no-fund
+      - name: 메일 접수 (지메일 -> inbox)
+        continue-on-error: true
+        run: node scripts/mail-intake.js
+        env:
+          MAIL_USER: ${{ secrets.MAIL_USER }}
+          MAIL_PASS: ${{ secrets.MAIL_PASS }}
+          INTAKE_TO: ${{ secrets.INTAKE_TO }}
+      - name: 스크린샷/메모 정리 (inbox -> 아이디어 풀, 요청 기록, RESUME)
+        run: node scripts/ingest.js
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+          GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+      - name: 변경사항 커밋
+        run: |
+          git config user.name "brain-bot"
+          git config user.email "brain-bot@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || (git commit -m "brain-sync: update [skip ci]" && git pull --rebase && git push)
