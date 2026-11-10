@@ -1,1 +1,233 @@
-{"updated":"","ideas":[]}
+{
+  "updated": "2026-11-10",
+  "ideas": [
+    {
+      "id": "idea-1",
+      "title": "시니어 건강 동행 매칭",
+      "summary": "질병 예방 및 건강 관리를 위해 고령자와 지역 운동·산책 동행 도우미를 연결하는 매칭 서비스",
+      "category": "헬스케어 매칭",
+      "aging_fit": 5,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 4,
+      "competition_guess": 3,
+      "risks": "동행 서비스 제공 중 발생할 수 있는 부상 등 안전사고 및 신원 검증 책임 문제",
+      "score": 20,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-1.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-2",
+      "title": "자녀 대행 시니어 심부름 매칭",
+      "summary": "멀리 사는 자녀가 결제하고 고령 부모님의 디지털 기기 조작, 병원 동행 등을 도울 지역 활동가를 연결하는 플랫폼",
+      "category": "생활 지원 매칭",
+      "aging_fit": 5,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 4,
+      "competition_guess": 3,
+      "risks": "매니저 신원 검증 미흡 시 노쇼, 사기 등 신뢰 문제 발생 위험",
+      "score": 20,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-1.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-3",
+      "title": "시니어 병원 동행 매칭",
+      "summary": "혼자 병원 이동과 수속이 어려운 어르신과 동행 도우미를 연결하는 매칭 서비스",
+      "category": "시니어 케어",
+      "aging_fit": 5,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 5,
+      "competition_guess": 3,
+      "risks": "동행 중 안전사고 발생 시 책임 소재 및 도우미 신원 검증 문제",
+      "score": 21,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-2.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-4",
+      "title": "시니어 디지털 교육 튜터 매칭",
+      "summary": "스마트폰 및 키오스크 활용에 어려움을 겪는 어르신과 1:1 방문/인근 튜터를 연결하는 플랫폼",
+      "category": "교육",
+      "aging_fit": 5,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 4,
+      "competition_guess": 4,
+      "risks": "어르신 유저의 앱 사용/결제 허들 및 지속적인 수익 모델 확보 필요",
+      "score": 21,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-2.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-5",
+      "title": "상속·증여 절세 전문가 매칭",
+      "summary": "자산 상속 및 증여 자문이 필요한 고령층과 전문 세무사·변호사를 연결해주는 플랫폼",
+      "category": "전문가 매칭",
+      "aging_fit": 4,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 4,
+      "competition_guess": 3,
+      "risks": "고액 자산 상담에 따른 신뢰성 확보 및 변호사법·세무사법 등 법적 규제 검토 필요",
+      "score": 18,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-2.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-6",
+      "title": "시니어 장인 기술 전수 매칭",
+      "summary": "은퇴 고령층의 숙련 기술 및 정비 노하우를 배우고자 하는 청년/기업을 매칭하는 플랫폼",
+      "category": "지식 공유",
+      "aging_fit": 4,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 3,
+      "competition_guess": 4,
+      "risks": "기술 수요자와 공급자 간 매칭 유인 부족 및 거래 빈도가 낮음",
+      "score": 18,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-2.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-7",
+      "title": "유품 정리 대행 중개",
+      "summary": "고인의 유품 정리 및 유치품 처리를 담당하는 전문 업체와 유족을 연결하는 매칭 플랫폼",
+      "category": "시니어/복지",
+      "aging_fit": 5,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 4,
+      "competition_guess": 4,
+      "risks": "유품 분실·손상 시 책임 소재 및 현장 작업자 신원 검증 문제",
+      "score": 21,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-3.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-8",
+      "title": "시니어 방문 운동 도우미 매칭",
+      "summary": "거동이 불편하거나 재활이 필요한 어르신과 전문 방문 트레이너를 연결하는 서비스",
+      "category": "헬스케어/시니어",
+      "aging_fit": 5,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 4,
+      "competition_guess": 3,
+      "risks": "운동 중 안전사고 발생 가능성 및 강사 자격 검증 부담",
+      "score": 20,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-3.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-9",
+      "title": "외국인 노동자 생활 도우미 매칭",
+      "summary": "국내 거주 외국인 노동자에게 행정, 번역, 생활 정착을 도와줄 수 있는 정착 도우미 매칭",
+      "category": "외국인/생활지원",
+      "aging_fit": 4,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 4,
+      "competition_guess": 4,
+      "risks": "행정·법률 상담 영역 침해 가능성 및 언어 소통 오류 위험",
+      "score": 19,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-3.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-10",
+      "title": "반려동물 장례 중개 플랫폼",
+      "summary": "반려동물 사후 장례 절차 및 추모 공간을 제공하는 정식 등록 업체와 보호자 연결",
+      "category": "펫케어",
+      "aging_fit": 4,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 4,
+      "competition_guess": 2,
+      "risks": "불법 장례 업체 중개 리스크 및 서비스 만족도 불확실성",
+      "score": 17,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-3.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-11",
+      "title": "부모님 안부 대행 매칭 플랫폼",
+      "summary": "타지에 사는 자녀와 지역 방문 도우미를 연결하여 고령 부모의 안부와 건강을 주기적으로 확인해 주는 서비스",
+      "category": "실버케어",
+      "aging_fit": 5,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 4,
+      "competition_guess": 4,
+      "risks": "방문 수행자의 신원 검증 부족 및 현장 사고 발생 시 책임 소재 분쟁 위험",
+      "score": 21,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-4.png"
+      ],
+      "added": "2026-11-10"
+    },
+    {
+      "id": "idea-12",
+      "title": "시니어 맞춤 수면 상담 매칭",
+      "summary": "수면 장애를 겪는 고령자를 위해 수면 관리 전문가 및 코치를 1:1로 매칭해 주는 온라인 플랫폼",
+      "category": "헬스케어",
+      "aging_fit": 4,
+      "platform_model": true,
+      "needs_hardware_or_capital": false,
+      "market_size_guess": 4,
+      "competition_guess": 3,
+      "risks": "의료법 저촉 가능성 및 전문 상담 인력 확보의 어려움",
+      "score": 18,
+      "status": "new",
+      "verified": false,
+      "sources": [
+        "doit-thing-4.png"
+      ],
+      "added": "2026-11-10"
+    }
+  ]
+}
