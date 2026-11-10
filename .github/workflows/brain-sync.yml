@@ -13,6 +13,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -26,12 +27,19 @@ jobs:
           MAIL_USER: ${{ secrets.MAIL_USER }}
           MAIL_PASS: ${{ secrets.MAIL_PASS }}
           INTAKE_TO: ${{ secrets.INTAKE_TO }}
+      - name: Gemini 연결 점검 (로그 확인용)
+        continue-on-error: true
+        run: node scripts/check-gemini.js
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
       - name: 스크린샷/메모 정리 (inbox -> 아이디어 풀, 요청 기록, RESUME)
         run: node scripts/ingest.js
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
           GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
       - name: 변경사항 커밋
         run: |
           git config user.name "brain-bot"

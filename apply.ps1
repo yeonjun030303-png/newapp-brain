@@ -1,4 +1,4 @@
-# apply.ps1 - 클립보드의 "저장 패키지"를 이 저장소에 적용하고 커밋/푸시한다.
+﻿# apply.ps1 - 클립보드의 "저장 패키지"를 이 저장소에 적용하고 커밋/푸시한다.
 # 사용: AI가 준 코드블록을 복사한 뒤 저장소 폴더에서  .\apply.ps1
 $ErrorActionPreference = 'Stop'
 Set-Location $PSScriptRoot

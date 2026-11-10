@@ -26,19 +26,32 @@ async function callGemini(parts) {
   let last = '';
   for (let i = 0; i < 6; i++) {
     const key = KEYS[i % KEYS.length];
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${key}`;
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: [{ parts }], generationConfig: { responseMimeType: 'application/json' } }),
-    });
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
+    let res;
+    try {
+      res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
+        body: JSON.stringify({ contents: [{ parts }], generationConfig: { responseMimeType: 'application/json' } }),
+        signal: AbortSignal.timeout(90000),
+      });
+    } catch (e) {
+      last = 'network ' + (e.cause?.code || e.name);
+      console.log(`Gemini 연결 실패(${last}) 모델=${MODEL} 시도 ${i + 1}/6`);
+      await sleep(5000);
+      continue;
+    }
     if (res.ok) {
       const j = await res.json();
       const t = (j.candidates?.[0]?.content?.parts || []).map((p) => p.text || '').join('');
       return JSON.parse(t.replace(/```json|```/g, '').trim());
     }
     last = String(res.status);
-    if ([429, 500, 503].includes(res.status)) { await sleep(15000); continue; }
+    if ([429, 500, 503].includes(res.status)) {
+      console.log(`Gemini ${res.status} 재시도 ${i + 1}/6`);
+      await sleep(15000);
+      continue;
+    }
     throw new Error('Gemini ' + res.status + ' ' + (await res.text()).slice(0, 200));
   }
   throw new Error('Gemini 재시도 실패 ' + last);
